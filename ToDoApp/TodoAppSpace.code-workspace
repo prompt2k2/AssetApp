@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "TasksTodo\\TasksTodo"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}
