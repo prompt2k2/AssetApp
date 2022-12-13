@@ -12,17 +12,17 @@ from django.contrib.auth.models import User
 
 
 class Engineer(models.Model):
-    engr_id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     date_created = models.DateTimeField(blank=True, null=True)
     #del_flag = models.CharField(max_length=255, blank=True, null=True)
     #deleted_on = models.DateTimeField(blank=True, null=True)
     #version = models.IntegerField()
-    #change_password = models.TextField()  # This field type is a guess.
+    # change_password = models.TextField()  # This field type is a guess.
     email = models.CharField(
         unique=True, max_length=255, blank=True, null=True)
-    #enabled = models.TextField()  # This field type is a guess.
+    # enabled = models.TextField()  # This field type is a guess.
     first_name = models.CharField(max_length=255, blank=True, null=True)
-    #is_logged_on = models.TextField()  # This field type is a guess.
+    # is_logged_on = models.TextField()  # This field type is a guess.
     #last_login_date = models.DateTimeField(blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     #no_of_wrong_login_count = models.IntegerField(blank=True, null=True)
@@ -46,7 +46,7 @@ class Engineer(models.Model):
 
 
 class Site(models.Model):
-    site_id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     date_created = models.DateTimeField(blank=True, null=True)
     #del_flag = models.CharField(max_length=255, blank=True, null=True)
     #deleted_on = models.DateTimeField(blank=True, null=True)
@@ -72,7 +72,8 @@ class Site(models.Model):
     #next_panel_maintenance_date = models.DateTimeField(blank=True, null=True)
     #last_ac_maintenance = models.ForeignKey('Task', models.DO_NOTHING, blank=True, null=True)
     #last_panel_maintenance = models.ForeignKey('Task', models.DO_NOTHING, blank=True, null=True)
-    site_manager = models.ForeignKey(Engineer, models.DO_NOTHING, blank=True, null=True)
+    site_manager = models.ForeignKey(
+        Engineer, models.DO_NOTHING, blank=True, null=True)
     #victron_id = models.CharField(unique=True, max_length=255, blank=True, null=True)
     # last_preventive_maintenance_0 = models.ForeignKey('Task', models.DO_NOTHING, db_column='last_preventive_maintenance_id', blank=True, null=True)  # Field renamed because of name conflict.
     #current_fuel_level = models.BigIntegerField(blank=True, null=True)
@@ -134,46 +135,62 @@ class AssetRequest(models.Model):
     product = models.ForeignKey(Items, on_delete=models.CASCADE)
 
     manufacturer = models.CharField(max_length=20)
-    bad_last_service = models.DateField()
-    bad_serial_number = models.CharField(max_length=20)
-    bad_model_number = models.CharField(max_length=20)
-    bad_equipment_name = models.CharField(max_length=50)
-    bad_equipment_rating = models.CharField(max_length=10)
-    bad_days_in_ops = models.CharField(max_length=10)
-    bad_installation_date = models.DateField()
+    bad_last_service = models.DateField(
+        verbose_name='Last Serviced Date')
+    bad_serial_number = models.CharField(max_length=20,
+                                         verbose_name='Serial Number')
+    bad_model_number = models.CharField(max_length=20,
+                                        verbose_name='Model Number')
+    bad_equipment_name = models.CharField(
+        max_length=50, verbose_name='Equipment Name')
+    bad_equipment_rating = models.CharField(
+        max_length=10, verbose_name='Equipment Rating')
+    bad_days_in_ops = models.CharField(
+        max_length=10, verbose_name='Days/Weeks/Months in Operations')
+    bad_installation_date = models.DateField(verbose_name='Installed Date')
 
-    new_equipment_name = models.CharField(max_length=100)
-    new_manufacturer = models.CharField(max_length=50)
-    new_equipment_rating = models.CharField(max_length=10)
-    expected_date = models.DateField()
+    new_equipment_name = models.CharField(
+        max_length=100, verbose_name='Equipment Name')
+    new_manufacturer = models.CharField(
+        max_length=50, verbose_name='Manufacturer')
+    new_equipment_rating = models.CharField(
+        max_length=10, verbose_name='Rating')
+    expected_date = models.DateField(verbose_name='Expected Delivery Date')
 
-    sitemanager_comment = models.CharField(max_length=500)
-    hod_comment = models.CharField(max_length=500)
-
+    sitemanager_comment = models.CharField(
+        max_length=500, verbose_name='Site Manager Comment')
+    hod_comment = models.CharField(
+        max_length=500, verbose_name='HOD/CTO Comment')
+    mgr_approve = models.BooleanField(blank=True, null=True)
+    cto_approve = models.BooleanField(blank=True, null=True)
+    mgr_status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    cto_status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
     justification = models.CharField(max_length=3000)
 
     objects = RequestManager()
 
     class Meta:
         ordering = ['-requestdate']
-        verbose_name_plural = 'Diesel Requests'
+        verbose_name_plural = 'Asset Requests'
 
     @property
     def request_approved(self):
-        return self.noc_approve == True  # and self.cto_approve == True
+        return self.mgr_approve == True  # and self.cto_approve == True
 
     @property
     def approve_request(self):
-        if not self.noc_approve:  # and self.cto_approve:
-            self.noc_approve = True
-            self.noc_status = 'confirmed'
+        if not self.mgr_approve:  # and self.cto_approve:
+            self.mgr_approve = True
+            self.mgr_status = 'confirmed'
             self.save()
 
     @property
     def pending_request(self):
-        if self.noc_approve:
-            self.noc_approve = False
-            self.noc_status = 'pending'
+        if self.mgr_approve:
+            self.mgr_approve = False
+            self.mgr_status = 'pending'
             self.save()
 
 #########################################################################################################
@@ -201,27 +218,27 @@ class AssetRequest(models.Model):
 
     @property
     def request_cancel(self):
-        if self.noc_approve or not self.noc_approve:
-            self.noc_approve = False
-            self.noc_status = 'cancelled'
+        if self.mgr_approve or not self.mgr_approve:
+            self.mgr_approve = False
+            self.mgr_status = 'cancelled'
             self.save()
 
     @property
     def reject_request(self):
-        if self.noc_approve or not self.noc_approve:
-            self.noc_approve = False
+        if self.mgr_approve or not self.mgr_approve:
+            self.mgr_approve = False
             self.status = 'rejected'
             self.save()
 
     @property
     def is_rejected(self):
-        return self.noc_status == 'rejected'
+        return self.mgr_status == 'rejected'
 
     # def get_absolute_url(self):
     #     return reverse('request-details', kwargs={'id':self.id})
 
-    def __str__(self):
-        return str(str(self.requestdate) + '-' + str(self.site) + '-' + str(self.noc_status))
+    def __str__(self, *args, **kwargs):
+        return str(str(self.requestdate) + '-' + str(self.site) + '-' + str(self.mgr_status))
 
 
 class UserProfile(models.Model):
