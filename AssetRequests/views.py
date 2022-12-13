@@ -60,3 +60,7 @@ def ManagerAllocation(request, pk):
 def pending_request(request):
     req = AssetRequest.objects.all_pending_requests()
     return render(request, 'pending_list.html', {'pending_list': req})
+
+def approved_request(request):
+    req = AssetRequest.objects.all_approved_requests()
+    return render(request, 'approved_list.html', {'approved_list':req})
