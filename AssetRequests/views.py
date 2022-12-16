@@ -61,6 +61,17 @@ def pending_request(request):
     req = AssetRequest.objects.all_pending_requests()
     return render(request, 'pending_list.html', {'pending_list': req})
 
+def approved_list(request):
+    asset_req = AssetRequest.objects.all_approved_requests()
+    return render(request, 'approved_list.html', {'approved_list':asset_req})
+
 def approved_request(request):
     req = AssetRequest.objects.all_approved_requests()
     return render(request, 'approved_list.html', {'approved_list':req})
+
+def RequestView(request, id):
+    asset_req = get_object_or_404(AssetRequest, id = id)
+    thesite = Site.objects.filter(name = asset_req.site)[0]
+    
+    return render(request, 'request_detail_view.html', {'asset_req':asset_req, 'site':thesite})
+

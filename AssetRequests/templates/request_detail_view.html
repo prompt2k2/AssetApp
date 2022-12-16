@@ -24,64 +24,24 @@
 
     <div class="row">
        
-      <div class="col-6 col-sm-2">Site ID:-</div>
-      <div class="col-6 col-sm-3">{{ site.name }}</div>
+      <div class="col-6 col-sm-3">Site ID:-</div>
+      <div class="col-6 col-sm-3">{{site.name }}</div>
   
       <!-- Force next columns to break to new line -->
       <div class="w-100"></div>
   
-      <div class="col-4 col-sm-2">Site Name:-</div>
+      <div class="col-4 col-sm-3">Site Name:-</div>
       <div class="col-6 col-sm-3">{{ site.sudo_name }}</div>
 
       <div class="w-100"></div>
   
-      <div class="col-4 col-sm-2">Site Engineer Name:-</div>
-      <div class="col-6 col-sm-3">{{ request_list.engineer }}</div>
+      <div class="col-4 col-sm-3">Site Manager:-</div>
+      <div class="col-6 col-sm-3">{{ site.site_manager}}</div>
 
       <div class="w-100"></div>
   
-      {% comment %} <div class="col-4 col-sm-2">Current Fuel Level:-</div>
-      <div class="col-6 col-sm-6">{{ site.current_fuel_level }} Litres as at {{ site.fuel_level_date}}</div> {% endcomment %}
-
-      <div class="w-100"></div>
-  
-      {% comment %} <div class="col-4 col-sm-2">Comment on PHCN:-</div>
-      <div class="col-6 col-sm-3">{{ request_list.phcn_comment}}</div> {% endcomment %}
-
-      <div class="w-100"></div>
-  
-      {% comment %} <div class="col-4 col-sm-2">Last TopUp Date:-</div>
-      <div class="col-6 col-sm-3">{{sitereport.top_up_date}}</div> {% endcomment %}
-
-      <div class="w-100"></div>
-  
-      {% comment %} <div class="col-4 col-sm-2">Last TopUp Quantity:-</div>
-      <div class="col-6 col-sm-3">{{ sitereport.litres }} Litres</div> {% endcomment %}
-
-      <div class="w-100"></div>
-{% comment %}   
-      <div class="col-4 col-sm-2">TopUp Statement:-</div>
-      <div class="col-6 col-sm-6">Balance before topup={{ sitereport.fuel_level_before_top_up }} | Balance after topup ={{ sitereport.fuel_level_after_top_up }}</div> {% endcomment %}
-
-      <div class="w-100"></div>
-{% comment %}   
-      <div class="col-4 col-sm-2">RH at TopUp:-</div>
-      <div class="col-6 col-sm-6">{{ sitereport.generator_run_hours}}</div>
-
-      <div class="w-100"></div>
-  
-      <div class="col-4 col-sm-2">Last recorded RH:-</div>
-      <div class="col-6 col-sm-3">{{ site.last_recorded_run_hour}}</div>
-
-      <div class="w-100"></div>
-  
-      <div class="col-4 col-sm-2">Quantity Requested:-</div>
-      <div class="col-6 col-sm-3">{{request_list.quantity_required}} Litres</div> {% endcomment %}
-
-      <div class="w-100"></div>
-  
-      <div class="col-4 col-sm-2">Justitification:-</div>
-      <div class="col-6 col-sm-3">{{request_list.justification}}</div>
+      <div class="col-4 col-sm-3">Justitification:-</div>
+      <div class="col-6 col-sm-3">{{asset_req.justification}}</div>
     
     
     </div>
@@ -89,7 +49,11 @@
 
     <br/>
     <hr/>
+
+    {% comment %}
     <div>
+
+        
         {% if request_list.request_approved %}
         <a href="{% url 'requestunapprove' request_list.id %}" class="btn btn-primary" name='unapprove'>MANAGER UNAPPROVE
         </a>
@@ -98,9 +62,11 @@
         </a>
         {% endif %}
         {% comment %} <a href="{% url 'requestcancel' request_list.id %}" class="btn btn-info" name='cancel'>CANCEL</a> {% endcomment %}
-        <a href="{% url 'reject' request_list.id %}" class="btn btn-danger" name='reject'>MANAGER REJECT</a>
+        {% comment %} <a href="{% url 'reject' request_list.id %}" class="btn btn-danger" name='reject'>MANAGER REJECT</a> 
         
     </div>
+    {% endcomment %}
+    
 </div>
 {% endblock %}
 

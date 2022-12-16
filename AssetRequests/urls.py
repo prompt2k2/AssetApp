@@ -10,4 +10,8 @@ urlpatterns = [
     path('<int:id>/', views.MakeRequestView, name='makerequest'),
     path('user/', views.ManagerAllocation, name='ManagerSchedule'),
     path('request/pending/all', views.pending_request, name='PendingRequest'),
+    path('request/all/view/<int:id>', views.RequestView, name='RequestDetailedView'),
+    path('request/approved/all', views.approved_list, name='ApprovedList'),
+    
+    
 ]
