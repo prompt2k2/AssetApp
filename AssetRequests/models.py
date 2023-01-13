@@ -163,9 +163,9 @@ class AssetRequest(models.Model):
         max_length=500, verbose_name='HOD/CTO Comment')
     mgr_approve = models.BooleanField(blank=True, null=True)
     cto_approve = models.BooleanField(blank=True, null=True)
-    mgr_status = models.CharField(
+    mgr_status = models.CharField(blank=True, null=True,
         max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
-    cto_status = models.CharField(
+    cto_status = models.CharField(blank=True, null=True,
         max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
     justification = models.CharField(max_length=3000)
 

@@ -33,4 +33,7 @@ class RequestForm(ModelForm):
             'sitemanager_comment': Textarea(attrs = {'rows':2, 'placeholder':'HOD comment'}),
             'hod_comment': Textarea(attrs = {'rows':2, 'placeholder':'HOD comment'}),
 
-            'justification': Textarea(attrs = {'rows':3, 'placeholder':'Please describe the justification for replacement'}),}
+            'justification': Textarea(attrs = {'rows':3, 'placeholder':'Please describe the justification for replacement'}),
+            }
+        
+    

@@ -37,9 +37,25 @@
   
       <div class="col-4 col-sm-3">Site Manager:-</div>
       <div class="col-6 col-sm-3">{{ site.site_manager}}</div>
+      
+      <div class="w-100"></div>
+      <br>
+      <div class="col-4 col-sm-3">Requested Item:-</div>
+      <div class="col-6 col-sm-3">{{ asset_req.product}}</div>
 
       <div class="w-100"></div>
+
+      <div class="col-4 col-sm-3">Rating:-</div>
+      <div class="col-6 col-sm-3">{{ asset_req.new_equipment_rating}}</div>
+
+      <div class="w-100"></div>
+      <br>
   
+      <div class="col-4 col-sm-3">Site Manager Comment:-</div>
+      <div class="col-6 col-sm-3">{{ asset_req.sitemanager_comment}}</div>
+
+      <div class="w-100"></div>
+        <br>
       <div class="col-4 col-sm-3">Justitification:-</div>
       <div class="col-6 col-sm-3">{{asset_req.justification}}</div>
     
@@ -50,22 +66,22 @@
     <br/>
     <hr/>
 
-    {% comment %}
-    <div>
+    
+     <div>
 
         
-        {% if request_list.request_approved %}
-        <a href="{% url 'requestunapprove' request_list.id %}" class="btn btn-primary" name='unapprove'>MANAGER UNAPPROVE
+        {% if asset_req.request_approved %}
+        <a href="{% url 'requestunapprove' asset_req.id %}" class="btn btn-primary" name='unapprove'>MANAGER UNAPPROVE
         </a>
         {% else %}
-        <a href="{% url 'approve' request_list.id %}" class="btn btn-success" name='approve'>MANAGER APPROVE
+        <a href="{% url 'approve' asset_req.id %}" class="btn btn-success" name='approve'>MANAGER APPROVE
         </a>
         {% endif %}
-        {% comment %} <a href="{% url 'requestcancel' request_list.id %}" class="btn btn-info" name='cancel'>CANCEL</a> {% endcomment %}
-        {% comment %} <a href="{% url 'reject' request_list.id %}" class="btn btn-danger" name='reject'>MANAGER REJECT</a> 
+         
+         <a href="{% url 'reject' asset_req.id %}" class="btn btn-danger" name='reject'>MANAGER REJECT</a> 
         
-    </div>
-    {% endcomment %}
+    </div> 
+    
     
 </div>
 {% endblock %}
