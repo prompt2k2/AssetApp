@@ -29,7 +29,7 @@ urlpatterns = [
     path('request/all/view/<int:id>', views.RequestView, name='all_request_view'),
     path('request/reject/<int:id>', views.reject_request, name='reject'),
     path('request/approve/<int:id>', views.approve_request, name='approve'),
-    path('accounts/login/', auth_views.LoginView.as_view( next_page='pending_requestlist'), name='login'),
+    path('accounts/login/', auth_views.LoginView.as_view( next_page='PendingRequest'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
     

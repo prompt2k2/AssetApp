@@ -122,7 +122,7 @@ def approve_request(request, id):
         try:
             send_mail(
                 # change this email to CTO email.
-                subject, fullmessage, settings.EMAIL_HOST_USER, ['eebewele@starsightenergy.com'], fail_silently=False
+                subject, fullmessage, settings.EMAIL_HOST_USER, ['cukachukwu@starsightenergy.com'], fail_silently=False
             )
         except BadHeaderError:
             return HttpResponse("Invalid Header Found")
@@ -157,7 +157,7 @@ def cto_pending_list(request):
         try:
             send_mail(
                 subject, fullmessage, settings.EMAIL_HOST_USER, [
-                    'eebewele@starsightenergy.com'],  # change this to CTO email address
+                    'cukachukwu@starsightenergy.com'],  # change this to CTO email address
                 fail_silently=False
             )
             j -= 1
@@ -186,7 +186,7 @@ def cto_request_view(request, id):
     req = get_object_or_404(AssetRequest, id=id)
     thesite = Site.objects.filter(name=req.site)[0]  # topup_request.site
 
-    return render(request, 'cto_request_detail_view.html', {'request_list': req})
+    return render(request, 'cto_request_detail_view.html', {'request_list': req, 'site':thesite})
 
 
 def cto_reject_request(request, id):

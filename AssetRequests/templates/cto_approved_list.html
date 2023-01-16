@@ -24,11 +24,12 @@
           <th scope="col">Request Time</th>
           <th scope="col">Site</th>
           <th scope="col">Engineer</th>
+          <th scope="col">Asset Requested</th>
           <th scope="col">Justification</th>
           <th scope="col">Manager Approver Status</th>
           <th scope="col">Manager</th>
           <th scope="col">CTO Status</th>
-          <th scope="col">CTO Approved Date</th>
+          <th scope="col">Expected Delivery Date</th>
         <!--  <th scope="col">Action</th> -->
         </tr>
     </thead>
@@ -38,12 +39,13 @@
             <td>{{f.requestdate}}</td>
             <td>{{f.request_time}}</td>
             <td>{{ f.site }}</td>
-            <td>{{ f.engineer }}</td>
+            <td>{{ f.site_engineer }}</td>
+            <td>{{ f.product }}</td>
             <td>{{ f.justification }}</td>
             <td>{{ f.mgr_status}}</td>
             <td>{{ f.site_manager.first_name }} {{ f.site_manager.last_name }}</td>
             <td>{{ f.cto_status }}</td>
-            <td>{{ f.cto_comment }}</td>
+            <td>{{ f.expected_date }}</td>
             
 
         </tr>
