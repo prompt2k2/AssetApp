@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Bahianita
+- Font Author: Copyright 2018 The Bahianita Project Authors (https://github.com/Omnibus-Type/Bahiana/Bahianita)
+- Font Source: http://fonts.gstatic.com/s/bahianita/v17/yYLr0hTb3vuqqsBUgxWtxTvV2NJPcA.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
